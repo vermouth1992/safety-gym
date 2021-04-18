@@ -1285,11 +1285,14 @@ class Engine(gym.Env, gym.utils.EzPickle):
                     self.buttons_timer = self.buttons_resampling_delay
                     # Try to build a new goal, end if we fail
                     if self.terminate_resample_failure:
-                        try:
-                            self.build_goal()
-                        except ResamplingError as e:
-                            # Normal end of episode
-                            self.done = True
+                        while True:
+                            try:
+                                self.build_goal()
+                                break
+                            except ResamplingError as e:
+                                print('Rebuild goal failed. Trying again...')
+                                # Normal end of episode
+                                # self.done = True
                     else:
                         # Try to make a goal, which could raise a ResamplingError exception
                         self.build_goal()
@@ -1299,7 +1302,7 @@ class Engine(gym.Env, gym.utils.EzPickle):
         # Timeout
         self.steps += 1
         if self.steps >= self.num_steps:
-            self.done = True  # Maximum number of steps in an episode reached
+            self.done = False  # Maximum number of steps in an episode reached
 
         return self.obs(), reward, self.done, info
 
