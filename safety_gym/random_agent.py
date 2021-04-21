@@ -5,10 +5,13 @@ import argparse
 import gym
 import numpy as np  # noqa
 import safety_gym  # noqa
+from safety_gym.wrappers import CMDPWrapper
 
 
 def run_random(env_name, render):
     env = gym.make(env_name)
+    env = CMDPWrapper(env)
+    env = gym.wrappers.TimeLimit(env, max_episode_steps=1000)
     obs = env.reset()
     done = False
     ep_ret = 0

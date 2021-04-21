@@ -71,7 +71,7 @@ class SafexpEnvBase:
             reg_config.update(config)
             register(id=env_name,
                      entry_point='safety_gym.envs.mujoco:Engine',
-                     max_episode_steps=1000,
+                     # max_episode_steps=1000,
                      kwargs={'config': reg_config})
             if MAKE_VISION_ENVIRONMENTS:
                 # Vision: note, these environments are experimental! Correct behavior not guaranteed
@@ -83,7 +83,7 @@ class SafexpEnvBase:
                 reg_config.update(vision_config)
                 register(id=vision_env_name,
                          entry_point='safety_gym.envs.mujoco:Engine',
-                         max_episode_steps=1000,
+                         # max_episode_steps=1000,
                          kwargs={'config': reg_config})
 
 
